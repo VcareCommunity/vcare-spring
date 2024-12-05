@@ -1,0 +1,35 @@
+import jakarta.validation.constraints.Size
+import jakarta.validation.constraints.NotEmpty
+
+input  LoginRequest {
+    @Size(max=20,message="{user.username.max.length}")
+    @NotEmpty(message="user.username.not.empty")
+    username,
+    @Size(max=20,message="{user.password.max.length}")
+    @NotEmpty(message="user.password.not.empty")
+    password
+}
+
+LoginUser{
+    id
+    username
+    gender
+    status
+    decodeEmail as email
+    decodeQq as qq
+    decodeTelephone as telephone
+    createTime
+    token:String
+    refreshToken:String
+}
+
+VcareUserRsponse{
+    id
+    username
+    gender
+    status
+    decodeEmail as email
+    decodeQq as qq
+    decodeTelephone as telephone
+    createTime
+}

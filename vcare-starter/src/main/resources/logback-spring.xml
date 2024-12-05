@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="10 seconds">
+
+    <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter"/>
+    <conversionRule conversionWord="wex"
+                    converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter"/>
+    <conversionRule conversionWord="wEx"
+                    converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter"/>
+
+    <springProperty scope="context" name="LOG_PATH" source="logging.file.path" defaultValue="logs"/>
+    <springProperty scope="context" name="APPLICATION_NAME" source="spring.application.name" defaultValue="vcare"/>
+
+
+    <!--控制台日志格式-->
+    <property name="CONSOLE_LOG_PATTERN"
+              value="${CONSOLE_LOG_PATTERN:-%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}"/>
+    <!--文件日志格式-->
+    <property name="FILE_LOG_PATTERN"
+              value="%d{HH:mm:ss.SSS} [%thread] %-5level %logger{20} - [%method,%line] - %msg%n"/>
+
+    <!--文件扩展名-->
+    <property name="LOG_EXTENSION" value=".log"/>
+
+    <!--日志文档保留天数-->
+    <property name="LOG_MAX_HISTORY" value="7"/>
+
+    <!--日志文档最大大小-->
+    <property name="LOG_MAX_FILE_SIZE" value="100 MB"/>
+
+    <!-- 控制台输出 -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>DEBUG</level>
+        </filter>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${CONSOLE_LOG_PATTERN}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <!-- 文件日志  -->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH}/${APPLICATION_NAME}${LOG_EXTENSION}</file>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH}/${APPLICATION_NAME}_%d{yyyy-MM-dd}_%i${LOG_EXTENSION}/</fileNamePattern>
+            <maxHistory>${LOG_MAX_HISTORY}</maxHistory>
+            <maxFileSize>${LOG_MAX_FILE_SIZE}</maxFileSize>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${FILE_LOG_PATTERN}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <logger name="cn.dev33" level="WARN"/>
+    <logger name="com.zaxxer.hikari" level="ERROR"/>
+    <logger name="io.netty" level="ERROR"/>
+    <logger name="org.babyfish.jimmer" level="INFO"/>
+    <logger name="org.hibernate" level="ERROR"/>
+    <logger name="org.redisson" level="ERROR"/>
+    <logger name="org.springframework" level="ERROR"/>
+    <logger name="top.vcare" level="INFO"/>
+
+    <root level="DEBUG">
+        <appender-ref ref="CONSOLE"/>
+    </root>
+
+    <root level="INFO">
+        <appender-ref ref="FILE"/>
+    </root>
+
+</configuration>

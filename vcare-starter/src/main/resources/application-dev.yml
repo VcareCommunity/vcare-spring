@@ -1,0 +1,37 @@
+spring:
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:postgresql://127.0.0.1:15435/vcare
+    username: 'vcare'
+    password: 'CfCMyM367miQ2h6X'
+    hikari:
+      driver-class-name: 'org.postgresql.Driver'
+      #用于控制连接在池中的最大生存时间
+      keepaliveTime: 900000
+      #连接在池中的最大生存时间
+      maxLifetime: 1500000
+      #获取连接时检测连接是否有效
+      connectionTestQuery: SELECT 1
+      #配置允许连接池达到的最大连接数  一般CPU核心数的两倍
+      maximumPoolSize: 20
+      # 连接池中允许的最小空闲连接数 - 默认值：10。
+      minimumIdle: 10
+      # 连接池中允许闲置的最长时间
+      idleTimeout: 600000
+redisson:
+  config: |
+    singleServerConfig:
+         idleConnectionTimeout: 10000
+         connectTimeout: 10000
+         timeout: 3000
+         retryAttempts: 3
+         retryInterval: 1500
+         password: redis_k7yfWm
+         subscriptionsPerConnection: 5
+         address: "redis://127.0.0.1:6379"
+         subscriptionConnectionMinimumIdleSize: 1
+         subscriptionConnectionPoolSize: 50
+         connectionMinimumIdleSize: 24
+         connectionPoolSize: 64
+         database: 1
+         dnsMonitoringInterval: 5000

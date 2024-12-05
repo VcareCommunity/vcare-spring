@@ -1,0 +1,62 @@
+[versions]
+apacheCommonLang3 = '3.17.0'
+apacheTika = "2.9.2"
+fastexcel = "0.18.4"
+jimmer = "latest.release"
+jimmerPlugin = 'latest.release'
+junitJupiter = "5.10.3"
+junitPlatform = "1.10.3"
+kotlin = '1.9.25'
+ksp = '1.9.25-1.0.20'
+minio = '8.5.11'
+postgresql = "42.7.3"
+redisson = "3.37.0"
+saToken = '1.39.0'
+springboot = '3.3.5'
+sqids = '0.1.0'
+
+
+[libraries]
+apacheCommonLang3 = { group = "org.apache.commons", name = "commons-lang3", version.ref = "apacheCommonLang3" }
+apacheTikaCore = { group = "org.apache.tika", name = "tika-core", version.ref = "apacheTika" }
+
+fastexcel = { group = "org.dhatim", name = "fastexcel", version.ref = "fastexcel" }
+
+minio = { group = "io.minio", name = "minio", version.ref = "minio" }
+
+postgresql = { group = "org.postgresql", name = "postgresql", version.ref = "postgresql" }
+
+jimmerSpringBootStarter = { group = "org.babyfish.jimmer", name = "jimmer-spring-boot-starter", version.ref = "jimmer" }
+
+junitJupiterApi = { group = "org.junit.jupiter", name = "junit-jupiter-api", version.ref = "junitJupiter" }
+junitJupiterEngine = { group = "org.junit.jupiter", name = "junit-jupiter-engine", version.ref = "junitJupiter" }
+junitPlatform = { group = "org.junit.platform", name = "junit-platform-launcher", version.ref = "junitPlatform" }
+
+kotlin-reflect = { group = "org.jetbrains.kotlin", name = "kotlin-reflect", version.ref = "kotlin" }
+kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlin" }
+kotlin-test = { group = "org.jetbrains.kotlin", name = "kotlin-test", version.ref = "kotlin" }
+
+redissonSpringBootStarter = { group = "org.redisson", name = "redisson-spring-boot-starter", version.ref = "redisson" }
+
+saTokenJwt = { group = "cn.dev33", name = "sa-token-jwt", version.ref = "saToken" }
+saTokenRedissonJackson = { group = "cn.dev33", name = "sa-token-redisson-jackson", version.ref = "saToken" }
+saTokenSpringBootStarter = { group = "cn.dev33", name = "sa-token-spring-boot3-starter", version.ref = "saToken" }
+saTokenTempJwt = { group = "cn.dev33", name = "sa-token-temp-jwt", version.ref = "saToken" }
+
+springBootStarterJdbc = { group = "org.springframework.boot", name = "spring-boot-starter-jdbc", version.ref = "springboot" }
+springbootStarterRedis = { group = "org.springframework.boot", name = "spring-boot-starter-data-redis", version.ref = "springboot" }
+springBootStarterTest = { group = "org.springframework.boot", name = "spring-boot-starter-test", version.ref = "springboot" }
+springbootStarterValidation = { group = "org.springframework.boot", name = "spring-boot-starter-validation", version.ref = "springboot" }
+springbootStarterWeb = { group = "org.springframework.boot", name = "spring-boot-starter-web", version.ref = "springboot" }
+
+sqids = { group = "org.sqids", name = "sqids", version.ref = "sqids" }
+
+
+[plugins]
+jimmerPlugin = { id = "tech.argonariod.gradle-plugin-jimmer", version.ref = "jimmerPlugin" }
+kotlin = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+springbootPlugin = { id = "org.springframework.boot", version.ref = "springboot" }
+
+
+
