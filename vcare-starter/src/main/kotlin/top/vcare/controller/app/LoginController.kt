@@ -17,6 +17,6 @@ open class LoginController(private val loginService: LoginService) {
 
     @PostMapping("/login")
     open fun login(@RequestBody @Validated loginRequest: LoginRequest): ApiResult<LoginUser> {
-        return ApiResult.ok(loginService.login(loginRequest))
+        return ApiResult.ok(loginService.mobileLogin(loginRequest))
     }
 }

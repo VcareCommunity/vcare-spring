@@ -10,17 +10,17 @@ enum class DeviceEnum(@JsonValue val value: Short, val deviceName: String) {
      * 所有
      */
     @EnumItem(ordinal = 0)
-    All(0, "all"),
+    ALL(0, "all"),
 
     /**
      * 移动端
      */
     @EnumItem(ordinal = 1)
-    Mobile(1, "mobile"),
+    MOBILE(1, "mobile"),
 
     /**
      * PC端
      */
     @EnumItem(ordinal = 2)
-    Pc(2, "pc")
+    PC(2, "pc")
 }

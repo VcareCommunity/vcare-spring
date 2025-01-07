@@ -1,8 +1,9 @@
 package top.vcare.config.redis
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
-import org.babyfish.jimmer.jackson.ImmutableModule
+import com.fasterxml.jackson.databind.jsontype.impl.StdTypeResolverBuilder
+import com.fasterxml.jackson.module.kotlin.KotlinModule
 import org.redisson.Redisson
 import org.redisson.api.RedissonClient
 import org.redisson.codec.JsonJacksonCodec
@@ -16,35 +17,48 @@ import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSeriali
 import org.springframework.data.redis.serializer.StringRedisSerializer
 
 @Configuration
-open class RedissonConfig(
-    @Value("\${redisson.config}") private val redissonConfig: String,
-    private val objectMapper: ObjectMapper
-) {
+open class RedissonConfig {
+
+
 
 
     @Bean
-    open fun redissonClient(): RedissonClient {
+    open fun redissonClient(
+        @Value("\${redisson.config}") redissonConfig: String,
+        objectMapper: ObjectMapper
+    ): RedissonClient {
         val config = Config.fromYAML(redissonConfig.byteInputStream())
         config.codec = JsonJacksonCodec(objectMapper)
         return Redisson.create(config)
     }
 
 
+//    private fun createObjectMapper(): ObjectMapper {
+//        val objectMapper = ObjectMapper()
+//        objectMapper.enable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+//        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+//        objectMapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
+//        objectMapper.activateDefaultTypingAsProperty(
+//            objectMapper.polymorphicTypeValidator,
+//            ObjectMapper.DefaultTyping.JAVA_LANG_OBJECT, "@type"
+//        );
+//        // 注册 JavaTimeModule ，以适配 java.time 下的时间类型
+//        objectMapper.registerModule(JavaTimeModule());
+//        objectMapper.registerModule(ImmutableModule());
+//        return objectMapper;
+//    }
+
     @Bean
-    open fun redisTemplate(redisConnectionFactory: RedisConnectionFactory): RedisTemplate<String, Any> {
-
+    open fun redisTemplate(
+        redisConnectionFactory: RedisConnectionFactory,
+        objectMapper: ObjectMapper
+    ): RedisTemplate<String, Any> {
         val redisTemplate = RedisTemplate<String, Any>()
-
-        val objectMapper = ObjectMapper().apply {
-            registerModules(JavaTimeModule())
-            registerModules(ImmutableModule())
-        }
         redisTemplate.connectionFactory = redisConnectionFactory
         redisTemplate.keySerializer = StringRedisSerializer()
         redisTemplate.valueSerializer = GenericJackson2JsonRedisSerializer(objectMapper)
         redisTemplate.hashKeySerializer = StringRedisSerializer()
         redisTemplate.hashValueSerializer = GenericJackson2JsonRedisSerializer(objectMapper)
-
         redisTemplate.afterPropertiesSet()
         return redisTemplate
     }

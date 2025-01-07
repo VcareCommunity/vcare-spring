@@ -1,4 +1,8 @@
+VcareConfigMobileResp {
+    community:String
+    version:String
+}
 
-VcareConfigResp{
-   configValue
+VcareConfigRedisDto{
+  #allScalars
 }

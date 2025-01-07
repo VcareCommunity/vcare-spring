@@ -11,4 +11,9 @@ enum class ConfigItemEnum(val key: String) {
      */
     REG_CODE_EXPIRED("regCodeExpired"),
 
+    /**
+     * 社区名称
+     */
+    COMMUNITY_NAME("communityName"),
+
 }

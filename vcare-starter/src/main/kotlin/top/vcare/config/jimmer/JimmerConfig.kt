@@ -1,20 +1,19 @@
-package top.vcare.config
+package top.vcare.config.jimmer
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.babyfish.jimmer.meta.ImmutableProp
 import org.babyfish.jimmer.meta.ImmutableType
 import org.babyfish.jimmer.sql.cache.Cache
-import org.babyfish.jimmer.sql.cache.caffeine.CaffeineValueBinder
 import org.babyfish.jimmer.sql.cache.chain.ChainCacheBuilder
 import org.babyfish.jimmer.sql.cache.redis.spring.RedisValueBinder
 import org.babyfish.jimmer.sql.kt.cache.KCacheFactory
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.data.redis.connection.RedisConnectionFactory
-import java.time.Duration
 
 @Configuration
 open class JimmerConfig {
+
 
     @Bean
     open fun cacheFactory(
@@ -28,7 +27,6 @@ open class JimmerConfig {
                         RedisValueBinder
                             .forObject<Any, Any>(type)
                             .redis(connectionFactory)
-
                             .build()
                     )
                     .build()
@@ -64,8 +62,6 @@ open class JimmerConfig {
                     )
                     .build()
         }
-
-
     }
 
 

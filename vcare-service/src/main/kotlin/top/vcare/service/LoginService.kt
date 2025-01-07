@@ -19,7 +19,7 @@ import top.vcare.entity.username
 @Component
 class LoginService(private val sqlClient: KSqlClient) {
 
-    fun login(request: LoginRequest): LoginUser {
+    fun mobileLogin(request: LoginRequest): LoginUser {
         val dbUser = sqlClient.createQuery(VcareUser::class) {
             where(table.username eq request.username)
             select(table.fetch(newFetcher(VcareUser::class).by {
@@ -30,9 +30,9 @@ class LoginService(private val sqlClient: KSqlClient) {
             .fetchOneOrNull()
         UserAssertEnum.USER_NOT_EXIST.isFalse(dbUser == null)
         UserAssertEnum.USERNAME_OR_PASSWORD_INCORRECT.isTrue(BCrypt.checkpw(request.password, dbUser!!.password))
-        StpUtil.login(dbUser.id, DeviceEnum.Mobile.deviceName)
+        StpUtil.login(dbUser.id, DeviceEnum.MOBILE.deviceName)
         val tokenInfo = StpUtil.getTokenInfo()
-        val refreshToken = SaTempUtil.createToken(DeviceEnum.Mobile.deviceName, dbUser.id, -1)
+        val refreshToken = SaTempUtil.createToken(DeviceEnum.MOBILE.deviceName, dbUser.id, -1)
         val loginUser = LoginUser(dbUser, tokenInfo.tokenValue, refreshToken)
         val session = StpUtil.getTokenSession()
         session.set(LOGIN_USER, loginUser)
